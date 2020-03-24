@@ -1,3 +1,3 @@
 export interface RepositoryDto {
-    name: string;
-};
+  name: string;
+}

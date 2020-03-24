@@ -11,7 +11,7 @@ import configuration from './configuration/configuration';
     ConfigModule.forRoot({
       envFilePath: ['.env', '.env.development.local', '.env.development'],
       load: [configuration],
-      isGlobal: true
+      isGlobal: true,
     }),
     GithubModule,
     MongooseModule.forRoot(process.env.DATABASE_HOST, {
@@ -20,7 +20,7 @@ import configuration from './configuration/configuration';
       useNewUrlParser: true,
       useUnifiedTopology: true,
       user: process.env.DATABASE_USER,
-      pass: process.env.DATABASE_PASSWORD
+      pass: process.env.DATABASE_PASSWORD,
     }),
   ],
   controllers: [AppController],

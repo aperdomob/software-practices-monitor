@@ -8,17 +8,17 @@ export class GithubApiService {
 
   constructor(private readonly configService: ConfigService) {
     this.octokit = new Octokit({
-      auth: configService.get<string>('github.token')
-    })
+      auth: configService.get<string>('github.token'),
+    });
   }
 
-  async checkVulnerabilityAlerts ({ owner, repo }): Promise<boolean> {
+  async checkVulnerabilityAlerts({ owner, repo }): Promise<boolean> {
     try {
       await this.octokit.repos.checkVulnerabilityAlerts({
         owner,
         repo,
       });
-  
+
       return true;
     } catch (ex) {
       return false;

@@ -6,7 +6,9 @@ import { RepositoryDto } from '../dto/repository.dto';
 
 @Injectable()
 export class RepositoryRepositoryService {
-  constructor(@InjectModel('Repository') private repositoryModel: Model<Repository>) {}
+  constructor(
+    @InjectModel('Repository') private repositoryModel: Model<Repository>,
+  ) {}
 
   async create(repositoryDto: RepositoryDto): Promise<Repository> {
     const newObject = new this.repositoryModel(repositoryDto);

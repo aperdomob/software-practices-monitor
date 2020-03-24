@@ -1,5 +1,4 @@
-export const repositoryFromOrganizationQuery =
-`
+export const repositoryFromOrganizationQuery = `
 query($organizationName: String!, $numberOfRepositories: Int!) {
   organization(login: $organizationName) {
     name

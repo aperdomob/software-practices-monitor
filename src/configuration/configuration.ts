@@ -8,6 +8,6 @@ export default () => ({
   },
   github: {
     token: process.env.GITHUB_TOKEN,
-    organization: process.env.GITHUB_ORGANIZATION_NAME
-  }
+    organization: process.env.GITHUB_ORGANIZATION_NAME,
+  },
 });

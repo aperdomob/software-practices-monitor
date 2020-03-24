@@ -8,12 +8,13 @@ export class GithubService {
   constructor(
     private readonly githubApiService: GithubApiService,
     private readonly githubGraphqlService: GithubGraphqlService,
-    private readonly configService: ConfigService) {}
+    private readonly configService: ConfigService,
+  ) {}
 
   scanOrganization(): Promise<any> {
     // return this.githubApiService.getRepositories( { org: 'xxx' });
     return this.githubGraphqlService.getOrganization({
-      org: this.configService.get<string>('github.organization')
-    })
+      org: this.configService.get<string>('github.organization'),
+    });
   }
 }

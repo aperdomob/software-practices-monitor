@@ -9,7 +9,9 @@ describe('RepositoryRepositoryService', () => {
       providers: [RepositoryRepositoryService],
     }).compile();
 
-    service = module.get<RepositoryRepositoryService>(RepositoryRepositoryService);
+    service = module.get<RepositoryRepositoryService>(
+      RepositoryRepositoryService,
+    );
   });
 
   it('should be defined', () => {

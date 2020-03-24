@@ -9,10 +9,18 @@ import { RepositoryRepositoryService } from './repositories/repository/repositor
 import { RepositorySchema } from './repositories/schemas/repository.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([
-    { name: 'Repository', schema: RepositorySchema },
-  ])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: 'Repository', schema: RepositorySchema },
+    ]),
+  ],
   controllers: [RepositoryController],
-  providers: [RepositoryService, GithubService, GithubApiService, GithubGraphqlService, RepositoryRepositoryService]
+  providers: [
+    RepositoryService,
+    GithubService,
+    GithubApiService,
+    GithubGraphqlService,
+    RepositoryRepositoryService,
+  ],
 })
 export class GithubModule {}
