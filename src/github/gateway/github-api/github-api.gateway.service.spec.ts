@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GithubApiService } from './github-api.service';
+import { GithubApiService } from './github-api.gateway.service';
 
 describe('GithubApiService', () => {
   let service: GithubApiService;

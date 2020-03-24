@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { GithubApiService } from '../github-api/github-api.service';
-import { GithubGraphqlService } from '../github-graphql/github-graphql.service';
+import { GithubApiService } from '../github-api/github-api.gateway.service';
+import { GithubGraphqlService } from '../github-graphql/github-graphql.gateway.service';
 
 @Injectable()
 export class GithubService {
