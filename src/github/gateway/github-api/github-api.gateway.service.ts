@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Octokit } from '@octokit/rest';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GithubApiService {
   private octokit: Octokit;
 
-  constructor() {
+  constructor(private readonly configService: ConfigService) {
     this.octokit = new Octokit({
-      auth: 'xxx'
+      auth: configService.get<string>('github.token')
     })
   }
 
