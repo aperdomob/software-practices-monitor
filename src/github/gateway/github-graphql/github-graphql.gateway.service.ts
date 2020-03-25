@@ -3,6 +3,7 @@ import * as ocktokit from '@octokit/graphql';
 import { graphql } from '@octokit/graphql/dist-types/types';
 import { repositoryFromOrganizationQuery } from './assets/get-repositories-from-organization';
 import { ConfigService } from '@nestjs/config';
+import { response } from './assets/graphql-response';
 
 @Injectable()
 export class GithubGraphqlService {
@@ -18,10 +19,12 @@ export class GithubGraphqlService {
   }
 
   public async getOrganization({ org }) {
-    const { organization } = await this.query(repositoryFromOrganizationQuery, {
-      organizationName: org,
-      numberOfRepositories: 1,
-    });
+    // const { organization } = await this.query(repositoryFromOrganizationQuery, {
+    //   organizationName: org,
+    //   numberOfRepositories: 1,
+    // });
+
+    const { organization } = response;
 
     return organization;
   }
