@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Organization, Repository } from '../interfaces/github.interfaces';
+import { OrganizationGithub, RepositoryGithub } from '../interfaces/github.interfaces';
 import { TeamApi } from '../../github-api/interfaces/github-api.interfaces';
 import { CollaboratorGraphql, BranchGraphql, BranchProtectionRuleGraphql } from '../../github-graphql/interfaces/graphql.interfaces';
+import { Organization, Repository, Collaborator } from '../../../interfaces/domain.interfaces';
 
 @Injectable()
 export class OrganizationMapper {
-  transform(organization: Organization) {
+  transform(organization: OrganizationGithub): Organization {
     return ({
       organization: organization.name,
-      repositories: organization.repositories.nodes.map(this.repositoryTransform),
+      repositories: organization.repositories.nodes.map((repo) => this.repositoryTransform(repo)),
     });
   }
 
-  private repositoryTransform(node: Repository) {
+  private repositoryTransform(node: RepositoryGithub): Repository {
     return ({
       name: node.name,
       lastUpdated: node.pushedAt,
@@ -48,8 +49,14 @@ export class OrganizationMapper {
       },
       branches: node.refs.nodes.map(this.branchTransform),
       files: {
-        develop: node.developCodeOwner.text,
-        master: node.masterCodeOwner.text,
+        develop: [{
+          name: '.github/CODEOWNERS',
+          content: node.developCodeOwner.text,
+        }],
+        master: [{
+          name: '.github/CODEOWNERS',
+          content: node.masterCodeOwner.text,
+        }]
       },
     });
   }
@@ -61,10 +68,10 @@ export class OrganizationMapper {
     };
   }
 
-  private collaboratorTransform(collaborator: CollaboratorGraphql) {
+  private collaboratorTransform(collaborator: CollaboratorGraphql): Collaborator {
     return {
       name: collaborator.node.login,
-      collaborator: collaborator.permission
+      permission: collaborator.permission
     };
   }
 

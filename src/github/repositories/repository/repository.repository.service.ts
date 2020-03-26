@@ -1,16 +1,16 @@
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
-import { Repository } from '../interfaces/repository.interface';
+import { RepositoryDocument } from '../interfaces/repository.document';
 import { RepositoryDto } from '../dto/repository.dto';
 
 @Injectable()
 export class RepositoryRepositoryService {
   constructor(
-    @InjectModel('Repository') private repositoryModel: Model<Repository>,
+    @InjectModel('Repository') private repositoryModel: Model<RepositoryDocument>,
   ) {}
 
-  async create(repositoryDto: RepositoryDto): Promise<Repository> {
+  async create(repositoryDto: RepositoryDto): Promise<RepositoryDocument> {
     const newObject = new this.repositoryModel(repositoryDto);
 
     return newObject.save();

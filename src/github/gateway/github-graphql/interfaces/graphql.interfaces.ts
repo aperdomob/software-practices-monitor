@@ -73,6 +73,7 @@ export interface RepositoryGraphQL {
 
 export interface OrganizationGraphQL {
   name: string;
+  login: string;
   repositories: {
     nodes: RepositoryGraphQL[]
   }

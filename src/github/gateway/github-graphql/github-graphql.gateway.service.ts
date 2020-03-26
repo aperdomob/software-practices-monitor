@@ -4,6 +4,7 @@ import { graphql } from '@octokit/graphql/dist-types/types';
 import { repositoryFromOrganizationQuery } from './assets/get-repositories-from-organization';
 import { ConfigService } from '@nestjs/config';
 import { response } from './assets/graphql-response';
+import { OrganizationGraphQL } from './interfaces/graphql.interfaces';
 
 @Injectable()
 export class GithubGraphqlService {
@@ -18,7 +19,7 @@ export class GithubGraphqlService {
     });
   }
 
-  public async getOrganization({ org }) {
+  public async getOrganization({ org }): Promise<OrganizationGraphQL> {
     // const { organization } = await this.query(repositoryFromOrganizationQuery, {
     //   organizationName: org,
     //   numberOfRepositories: 1,

@@ -26,11 +26,6 @@ export class RepositoryController {
     }]
   }
 
-  @Post('/scan')
-  public scanRepositorioes() {
-    // scan all repositoriies from organization
-  }
-
   @Get((':repositoryName'))
   public getRepositoryDetail(@Param() params) {
     return {

@@ -2,6 +2,7 @@ export const repositoryFromOrganizationQuery = `
 query($organizationName: String!, $numberOfRepositories: Int!) {
   organization(login: $organizationName) {
     name
+    login
     repositories(first: $numberOfRepositories) {
       nodes {
         name
