@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GithubGraphqlService } from './github-graphql.gateway.service';
+import { GithubGraphqlService } from './github-graphql.gateway';
 
 describe('GithubGraphqlService', () => {
   let service: GithubGraphqlService;

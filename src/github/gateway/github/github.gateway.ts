@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { GithubApiService } from '../github-api/github-api.gateway.service';
-import { GithubGraphqlService } from '../github-graphql/github-graphql.gateway.service';
+import { GithubApiGateway } from '../github-api/github-api.gateway';
+import { GithubGraphqlService } from '../github-graphql/github-graphql.gateway';
 import { ConfigService } from '@nestjs/config';
 import { OrganizationMapper } from './mapper/organization.mapper';
 import { Organization } from '../../interfaces/domain.interfaces';
@@ -8,7 +8,7 @@ import { Organization } from '../../interfaces/domain.interfaces';
 @Injectable()
 export class GithubGateway {
   constructor(
-    private readonly githubApiService: GithubApiService,
+    private readonly githubApiService: GithubApiGateway,
     private readonly githubGraphqlService: GithubGraphqlService,
     private readonly organizationMapper: OrganizationMapper,
     private readonly configService: ConfigService,

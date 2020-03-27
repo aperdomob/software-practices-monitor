@@ -3,7 +3,7 @@ import { Octokit } from '@octokit/rest';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class GithubApiService {
+export class GithubApiGateway {
   private octokit: Octokit;
 
   constructor(private readonly configService: ConfigService) {

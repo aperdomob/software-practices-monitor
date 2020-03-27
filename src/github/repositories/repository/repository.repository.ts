@@ -5,7 +5,7 @@ import { RepositoryDocument } from '../interfaces/repository.document';
 import { RepositoryDto } from '../dto/repository.dto';
 
 @Injectable()
-export class RepositoryRepositoryService {
+export class RepositoryRepository {
   constructor(
     @InjectModel('Repository') private repositoryModel: Model<RepositoryDocument>,
   ) {}
