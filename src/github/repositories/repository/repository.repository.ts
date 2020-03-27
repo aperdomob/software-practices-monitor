@@ -15,4 +15,29 @@ export class RepositoryRepository {
 
     return newObject.save();
   }
+
+  public async getAll() {
+    const items = await this.repositoryModel.find({}).exec();
+    
+    return items.map((item) => item.toObject({
+      transform: this.transform,
+    }));
+  }
+
+  public async get({ name }) {
+    const repo = await this.repositoryModel.findOne({ name }).exec();
+
+    return repo.toObject({
+      transform: this.transform
+    });
+  }
+
+  private transform(doc, ret) {
+    const trans = { ...ret };
+    delete trans._id;
+    delete trans.__v;
+
+    return trans;
+  }
+
 }

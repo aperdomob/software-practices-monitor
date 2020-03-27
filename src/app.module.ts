@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { GithubModule } from './github/github.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { RuleEngineModule } from './rule-engine/rule-engine.module';
 import configuration from './configuration/configuration';
 
 @Module({
@@ -22,6 +23,7 @@ import configuration from './configuration/configuration';
       user: process.env.DATABASE_USER,
       pass: process.env.DATABASE_PASSWORD,
     }),
+    RuleEngineModule,
   ],
   controllers: [AppController],
   providers: [AppService],
