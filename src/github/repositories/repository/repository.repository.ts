@@ -10,6 +10,18 @@ export class RepositoryRepository {
     @InjectModel('Repository') private repositoryModel: Model<RepositoryDocument>,
   ) {}
 
+  public deleteAll() {
+    this.repositoryModel.deleteMany({}).exec();
+  }
+
+  async saveAll(repositoriesDto: RepositoryDto[]): Promise<RepositoryDto[]> {
+    const docs = repositoriesDto.map((dto) => new this.repositoryModel(dto));
+
+    await this.repositoryModel.collection.insertMany(docs);
+
+    return repositoriesDto;
+  }
+
   async create(repositoryDto: RepositoryDto): Promise<RepositoryDocument> {
     const newObject = new this.repositoryModel(repositoryDto);
 

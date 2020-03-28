@@ -5,24 +5,35 @@ export enum Level {
   CRITICAL = 'critical'
 }
 
-export interface Rule {
+export interface Rule<T> {
   name: string;
   displayName?: string;
   level: Level
-  expression: (value: any) => boolean;
-  errorMessagePattern: string;
-  children: []
+  expression: (value: T) => void;
+  errorMessagePattern?: string;
+  children?: Rule<any>[]
+}
+
+export interface  ErrorResponse {
+  message: string;
+  level: Level;
+  actual: any;
+  expected: any;
+  stack: string;  
 }
 
 export interface RuleResponse {
-  name: string,
-  displayName?: string,
-  result: string,
-  error?: {
-    message: string,
-    level: Level,
-    actual: any,
-    expected: any,
-    stack: string
+  name: string;
+  displayName?: string;
+  result: string;
+  error?: ErrorResponse;
+}
+
+export interface RuleEngineResponse {
+  rules: RuleResponse[],
+  metrics: {
+    total: number;
+    ok: number;
+    fail: number;
   }
 }

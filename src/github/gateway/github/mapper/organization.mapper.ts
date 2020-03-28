@@ -43,7 +43,7 @@ export class OrganizationMapper {
           users: node.collaborators.edges.map(this.collaboratorTransform),
         },
         branches: {
-          default: node.defaultBranchRef.name,
+          default: node.defaultBranchRef ? node.defaultBranchRef.name : undefined,
           protectionRules: node.branchProtectionRules.nodes.map(this.protectionRulesTransform),
         },
       },
@@ -51,11 +51,11 @@ export class OrganizationMapper {
       files: {
         develop: [{
           name: '.github/CODEOWNERS',
-          content: node.developCodeOwner.text,
+          content: node.developCodeOwner ? node.developCodeOwner.text : undefined,
         }],
         master: [{
           name: '.github/CODEOWNERS',
-          content: node.masterCodeOwner.text,
+          content: node.masterCodeOwner ? node.masterCodeOwner.text : undefined,
         }]
       },
     });

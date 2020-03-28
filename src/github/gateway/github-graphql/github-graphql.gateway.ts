@@ -20,12 +20,10 @@ export class GithubGraphqlService {
   }
 
   public async getOrganization({ org }): Promise<OrganizationGraphQL> {
-    // const { organization } = await this.query(repositoryFromOrganizationQuery, {
-    //   organizationName: org,
-    //   numberOfRepositories: 1,
-    // });
-
-    const { organization } = response;
+    const { organization } = await this.query(repositoryFromOrganizationQuery, {
+      organizationName: org,
+      numberOfRepositories: 100,
+    });
 
     return organization;
   }

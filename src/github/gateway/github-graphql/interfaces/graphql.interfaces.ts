@@ -57,11 +57,13 @@ export interface RepositoryGraphQL {
   squashMergeAllowed: boolean;
   viewerPermission: string;
   fundingLinks: any[];
-  licenseInfo?: string;
-  masterCodeOwner: CodeOwner;
-  developCodeOwner: CodeOwner;
+  licenseInfo?: {
+    name: string;
+  }
+  masterCodeOwner?: CodeOwner;
+  developCodeOwner?: CodeOwner;
   dependencyGraphManifests: DependencyGraphManifests;
-  defaultBranchRef: DefaultBranch;
+  defaultBranchRef?: DefaultBranch;
   collaborators: { edges: CollaboratorGraphql[] };
   branchProtectionRules: {
     nodes: BranchProtectionRuleGraphql[]

@@ -8,6 +8,6 @@ export class OrganizationController {
 
   @Post('/scanner')
   public async scanner() {
-    this.organizationService.scanner();
+    return this.organizationService.scanner();
   }
 }

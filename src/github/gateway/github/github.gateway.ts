@@ -14,9 +14,7 @@ export class GithubGateway {
     private readonly configService: ConfigService,
   ) { }
 
-  async scanOrganization(): Promise<Organization> {
-    // return this.githubApiService.getRepositories( { org: 'xxx' });
-
+  async scanOrganization() {
     const organization = await this.githubGraphqlService.getOrganization({
       org: this.configService.get<string>('github.organization'),
     });
@@ -31,7 +29,7 @@ export class GithubGateway {
       return {
         ...repository,
         additionalData: {
-          ...repo.data,
+          ...repo,
           ...{ isVulnerabilitiChecked, teams }
         }
       };

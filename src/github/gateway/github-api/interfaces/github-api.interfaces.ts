@@ -129,8 +129,15 @@ export interface RepositoryApi {
   mirror_url: null,
   archived: boolean;
   disabled: boolean;
-  open_issues_count: 1,
-  license: null,
+  open_issues_count: number;
+  license?: {
+    key: string;
+    name: string
+    spdx_id: string,
+    url?: string,
+    node_id: string
+
+  }
   forks: number;
   open_issues: number;
   watchers: number;
@@ -142,6 +149,8 @@ export interface RepositoryApi {
   allow_rebase_merge: boolean;
   delete_branch_on_merge: boolean;
   organization: Organization,
+  parent?: any;
+  source?: any;
   network_count: number;
   subscribers_count: number;
   isVulnerabilitiChecked: boolean;

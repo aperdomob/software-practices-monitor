@@ -48,7 +48,7 @@ export interface Setting {
     users: Collaborator[];
   };
   branches: {
-    default: string;
+    default?: string;
     protectionRules: BranchProtectionRules[];
   };
 }
@@ -61,11 +61,12 @@ export interface Branch {
 
 export interface File {
   name: string;
-  content: string;
+  content?: string;
 }
 
 export interface Repository {
   name: string;
+  description?: string;
   lastUpdated: string;
   isPrivate: boolean;
   settings: Setting;

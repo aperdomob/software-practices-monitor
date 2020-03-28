@@ -10,6 +10,10 @@ export class OrganizationService {
 
   public async scanner() {
     const organization = await this.githubGateway.scanOrganization();
-    organization.repositories.map((repo => this.repositoryRepository.create(repo)));
+
+    this.repositoryRepository.deleteAll();
+    this.repositoryRepository.saveAll(organization.repositories);
+
+    return organization;
   }
 }
