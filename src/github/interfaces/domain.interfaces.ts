@@ -56,7 +56,6 @@ export interface Setting {
 export interface Branch {
   name: string;
   updated: string;
-
 }
 
 export interface File {
@@ -78,11 +77,11 @@ export interface Repository {
   isPrivate: boolean;
   settings: Setting;
   branches: Branch[];
-  vulnerabilities: VulnerabilityAlert[]
+  vulnerabilities: VulnerabilityAlert[];
   files: {
     develop: File[];
     master: File[];
-  },
+  };
 }
 
 export interface Organization {

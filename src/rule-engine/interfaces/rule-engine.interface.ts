@@ -2,24 +2,24 @@ export enum Level {
   INFO = 'info',
   WARNING = 'warning',
   ERROR = 'error',
-  CRITICAL = 'critical'
+  CRITICAL = 'critical',
 }
 
 export interface Rule<T> {
   name: string;
   displayName?: string;
-  level: Level
+  level: Level;
   expression: (value: T) => void;
   errorMessagePattern?: string;
-  children?: Rule<any>[]
+  children?: Rule<any>[];
 }
 
-export interface  ErrorResponse {
+export interface ErrorResponse {
   message: string;
   level: Level;
   actual: any;
   expected: any;
-  stack: string;  
+  stack: string;
 }
 
 export interface RuleResponse {
@@ -30,10 +30,10 @@ export interface RuleResponse {
 }
 
 export interface RuleEngineResponse {
-  rules: RuleResponse[],
+  rules: RuleResponse[];
   metrics: {
     total: number;
     ok: number;
     fail: number;
-  }
+  };
 }

@@ -1,5 +1,8 @@
-import { OrganizationGraphQL, RepositoryGraphQL } from "../../github-graphql/interfaces/graphql.interfaces";
-import { RepositoryApi } from "../../github-api/interfaces/github-api.interfaces";
+import {
+  OrganizationGraphQL,
+  RepositoryGraphQL,
+} from '../../github-graphql/interfaces/graphql.interfaces';
+import { RepositoryApi } from '../../github-api/interfaces/github-api.interfaces';
 
 export interface RepositoryGithub extends RepositoryGraphQL {
   additionalData: RepositoryApi;
@@ -8,5 +11,5 @@ export interface RepositoryGithub extends RepositoryGraphQL {
 export interface OrganizationGithub extends OrganizationGraphQL {
   repositories: {
     nodes: RepositoryGithub[];
-  }
+  };
 }

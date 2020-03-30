@@ -7,7 +7,8 @@ import { RepositoryDto } from '../dto/repository.dto';
 @Injectable()
 export class RepositoryRepository {
   constructor(
-    @InjectModel('Repository') private repositoryModel: Model<RepositoryDocument>,
+    @InjectModel('Repository')
+    private repositoryModel: Model<RepositoryDocument>,
   ) {}
 
   public deleteAll() {
@@ -15,7 +16,7 @@ export class RepositoryRepository {
   }
 
   async saveAll(repositoriesDto: RepositoryDto[]): Promise<RepositoryDto[]> {
-    const docs = repositoriesDto.map((dto) => new this.repositoryModel(dto));
+    const docs = repositoriesDto.map(dto => new this.repositoryModel(dto));
 
     await this.repositoryModel.collection.insertMany(docs);
 
@@ -30,17 +31,19 @@ export class RepositoryRepository {
 
   public async getAll() {
     const items = await this.repositoryModel.find({}).exec();
-    
-    return items.map((item) => item.toObject({
-      transform: this.transform,
-    }));
+
+    return items.map(item =>
+      item.toObject({
+        transform: this.transform,
+      }),
+    );
   }
 
   public async get({ name }) {
     const repo = await this.repositoryModel.findOne({ name }).exec();
 
     return repo.toObject({
-      transform: this.transform
+      transform: this.transform,
     });
   }
 
@@ -51,5 +54,4 @@ export class RepositoryRepository {
 
     return trans;
   }
-
 }

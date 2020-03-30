@@ -17,9 +17,8 @@ import { EngineService } from 'src/rule-engine/service/engine/engine.service';
   imports: [
     MongooseModule.forFeature([
       { name: 'Repository', schema: RepositorySchema },
-    ], 
-    ),
-    RuleEngineModule
+    ]),
+    RuleEngineModule,
   ],
   controllers: [RepositoryController, OrganizationController],
   providers: [

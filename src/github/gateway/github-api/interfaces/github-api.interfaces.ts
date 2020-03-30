@@ -31,7 +31,7 @@ export interface TeamApi {
   members_url: string;
   repositories_url: string;
   permission: string;
-  parent?: TeamApi
+  parent?: TeamApi;
 }
 
 export interface Owner {
@@ -67,7 +67,7 @@ export interface RepositoryApi {
   name: string;
   full_name: string;
   private: boolean;
-  owner: Owner,
+  owner: Owner;
   html_url: string;
   description?: string;
   fork: boolean;
@@ -126,29 +126,28 @@ export interface RepositoryApi {
   has_wiki: boolean;
   has_pages: boolean;
   forks_count: number;
-  mirror_url: null,
+  mirror_url?: string;
   archived: boolean;
   disabled: boolean;
   open_issues_count: number;
   license?: {
     key: string;
-    name: string
-    spdx_id: string,
-    url?: string,
-    node_id: string
-
-  }
+    name: string;
+    spdx_id: string;
+    url?: string;
+    node_id: string;
+  };
   forks: number;
   open_issues: number;
   watchers: number;
   default_branch: string;
-  permissions: Permission,
+  permissions: Permission;
   temp_clone_token: string;
   allow_squash_merge: boolean;
   allow_merge_commit: boolean;
   allow_rebase_merge: boolean;
   delete_branch_on_merge: boolean;
-  organization: Organization,
+  organization: Organization;
   parent?: any;
   source?: any;
   network_count: number;

@@ -1,24 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { OrganizationGithub, RepositoryGithub } from '../interfaces/github.interfaces';
+import {
+  OrganizationGithub,
+  RepositoryGithub,
+} from '../interfaces/github.interfaces';
 import { TeamApi } from '../../github-api/interfaces/github-api.interfaces';
-import { CollaboratorGraphql, BranchGraphql, BranchProtectionRuleGraphql, VulnerabilityAlertGraphQL } from '../../github-graphql/interfaces/graphql.interfaces';
-import { Organization, Repository, Collaborator, VulnerabilityAlert } from '../../../interfaces/domain.interfaces';
+import {
+  CollaboratorGraphql,
+  BranchGraphql,
+  BranchProtectionRuleGraphql,
+  VulnerabilityAlertGraphQL,
+} from '../../github-graphql/interfaces/graphql.interfaces';
+import {
+  Organization,
+  Repository,
+  Collaborator,
+  VulnerabilityAlert,
+} from '../../../interfaces/domain.interfaces';
 
 @Injectable()
 export class OrganizationMapper {
   transform(organization: OrganizationGithub): Organization {
-    return ({
+    return {
       organization: organization.name,
-      repositories: organization.repositories.nodes.map((repo) => this.repositoryTransform(repo)),
-    });
+      repositories: organization.repositories.nodes.map(repo =>
+        this.repositoryTransform(repo),
+      ),
+    };
   }
 
   private repositoryTransform(node: RepositoryGithub): Repository {
-    return ({
+    return {
       name: node.name,
       lastUpdated: node.pushedAt,
       isPrivate: node.isPrivate,
-      vulnerabilities: node.vulnerabilityAlerts.nodes.map((vulnerability) => this.vulnerabilityTransform(vulnerability)),
+      vulnerabilities: node.vulnerabilityAlerts.nodes.map(vulnerability =>
+        this.vulnerabilityTransform(vulnerability),
+      ),
       settings: {
         general: {
           isTemplate: node.isTemplate,
@@ -44,42 +61,56 @@ export class OrganizationMapper {
           users: node.collaborators.edges.map(this.collaboratorTransform),
         },
         branches: {
-          default: node.defaultBranchRef ? node.defaultBranchRef.name : undefined,
-          protectionRules: node.branchProtectionRules.nodes.map(this.protectionRulesTransform),
+          default: node.defaultBranchRef
+            ? node.defaultBranchRef.name
+            : undefined,
+          protectionRules: node.branchProtectionRules.nodes.map(
+            this.protectionRulesTransform,
+          ),
         },
       },
       branches: node.refs.nodes.map(this.branchTransform),
       files: {
-        develop: [{
-          name: '.github/CODEOWNERS',
-          content: node.developCodeOwner ? node.developCodeOwner.text : undefined,
-        }],
-        master: [{
-          name: '.github/CODEOWNERS',
-          content: node.masterCodeOwner ? node.masterCodeOwner.text : undefined,
-        }]
+        develop: [
+          {
+            name: '.github/CODEOWNERS',
+            content: node.developCodeOwner
+              ? node.developCodeOwner.text
+              : undefined,
+          },
+        ],
+        master: [
+          {
+            name: '.github/CODEOWNERS',
+            content: node.masterCodeOwner
+              ? node.masterCodeOwner.text
+              : undefined,
+          },
+        ],
       },
-    });
+    };
   }
 
   private teamTransform(node: TeamApi) {
     return {
       name: node.name,
-      permission: node.permission
+      permission: node.permission,
     };
   }
 
-  private collaboratorTransform(collaborator: CollaboratorGraphql): Collaborator {
+  private collaboratorTransform(
+    collaborator: CollaboratorGraphql,
+  ): Collaborator {
     return {
       name: collaborator.node.login,
-      permission: collaborator.permission
+      permission: collaborator.permission,
     };
   }
 
   private branchTransform(branch: BranchGraphql) {
     return {
       name: branch.name,
-      updated: branch.target.committedDate
+      updated: branch.target.committedDate,
     };
   }
 
@@ -103,12 +134,14 @@ export class OrganizationMapper {
     };
   }
 
-  private vulnerabilityTransform(node: VulnerabilityAlertGraphQL): VulnerabilityAlert {
+  private vulnerabilityTransform(
+    node: VulnerabilityAlertGraphQL,
+  ): VulnerabilityAlert {
     return {
       name: node.securityVulnerability.package.name,
       ecosystem: node.securityVulnerability.package.ecosystem,
       severity: node.securityVulnerability.severity,
-      file: node.vulnerableManifestPath
+      file: node.vulnerableManifestPath,
     };
   }
 }

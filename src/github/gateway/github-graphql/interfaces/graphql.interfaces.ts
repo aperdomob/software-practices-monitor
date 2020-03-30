@@ -5,7 +5,7 @@ export interface CodeOwner {
 export interface DependencyGraphManifests {
   nodes: {
     id: string;
-  }[]
+  }[];
 }
 
 export interface DefaultBranch {
@@ -13,10 +13,10 @@ export interface DefaultBranch {
 }
 
 export interface CollaboratorGraphql {
-  permission: string,
+  permission: string;
   node: {
-    login: string
-  }
+    login: string;
+  };
 }
 
 export interface BranchProtectionRuleGraphql {
@@ -36,10 +36,10 @@ export interface BranchProtectionRuleGraphql {
 }
 
 export interface BranchGraphql {
-  name: string,
+  name: string;
   target: {
     committedDate: string;
-  }
+  };
 }
 
 export interface VulnerabilityAlertGraphQL {
@@ -47,7 +47,7 @@ export interface VulnerabilityAlertGraphQL {
     package: {
       name: string;
       ecosystem: string;
-    },
+    };
     severity: string;
   };
   vulnerableManifestPath: string;
@@ -69,19 +69,19 @@ export interface RepositoryGraphQL {
   squashMergeAllowed: boolean;
   viewerPermission: string;
   vulnerabilityAlerts: {
-    nodes: VulnerabilityAlertGraphQL[]
-  }
+    nodes: VulnerabilityAlertGraphQL[];
+  };
   fundingLinks: any[];
   licenseInfo?: {
     name: string;
-  }
+  };
   masterCodeOwner?: CodeOwner;
   developCodeOwner?: CodeOwner;
   dependencyGraphManifests: DependencyGraphManifests;
   defaultBranchRef?: DefaultBranch;
   collaborators: { edges: CollaboratorGraphql[] };
   branchProtectionRules: {
-    nodes: BranchProtectionRuleGraphql[]
+    nodes: BranchProtectionRuleGraphql[];
   };
   refs: {
     nodes: BranchGraphql[];
@@ -92,6 +92,6 @@ export interface OrganizationGraphQL {
   name: string;
   login: string;
   repositories: {
-    nodes: RepositoryGraphQL[]
-  }
+    nodes: RepositoryGraphQL[];
+  };
 }

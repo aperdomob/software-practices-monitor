@@ -1,14 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Rule, RuleResponse, ErrorResponse, RuleEngineResponse } from 'src/rule-engine/interfaces/rule-engine.interface';
+import {
+  Rule,
+  RuleResponse,
+  ErrorResponse,
+  RuleEngineResponse,
+} from 'src/rule-engine/interfaces/rule-engine.interface';
 import { AssertionError } from 'chai';
 
 @Injectable()
 export class EngineService {
   public run<T>(rules: Rule<T>[], value: T): RuleEngineResponse {
-    const resultRules = rules.map((rule) => this.applyRule<T>(rule, value));
-    
+    const resultRules = rules.map(rule => this.applyRule<T>(rule, value));
+
     const total = resultRules.length;
-    const failRules = resultRules.filter((current) => current.result === 'fail');
+    const failRules = resultRules.filter(current => current.result === 'fail');
     const fail = failRules.length;
     const ok = total - fail;
 
@@ -17,9 +22,9 @@ export class EngineService {
       metrics: {
         total,
         ok,
-        fail
-      }
-    }
+        fail,
+      },
+    };
   }
 
   private applyRule<T>(rule, value: T): RuleResponse {
@@ -36,13 +41,13 @@ export class EngineService {
     }
 
     return result;
-  };
+  }
 
   private runExpression<T>(rule, value: T): ErrorResponse {
     try {
       rule.expression(value);
     } catch (ex) {
-      if ((ex.name === 'AssertionError')) {
+      if (ex.name === 'AssertionError') {
         return {
           message: ex.message,
           stack: ex.stack,

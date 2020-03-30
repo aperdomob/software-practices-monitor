@@ -10,22 +10,21 @@ export class RepositoryService {
   constructor(
     private readonly githubService: GithubGateway,
     private readonly repositoryReporitory: RepositoryRepository,
-    private  readonly engineService: EngineService
+    private readonly engineService: EngineService,
   ) {}
 
   async getAllRepositories() {
-    const repositories = await this.repositoryReporitory.getAll() as Repository[];
+    const repositories = (await this.repositoryReporitory.getAll()) as Repository[];
 
-    const rulesResult = repositories
-      .map((repo) => {
-        const result = this.engineService.run<Repository>(GithubRules, repo);
+    const rulesResult = repositories.map(repo => {
+      const result = this.engineService.run<Repository>(GithubRules, repo);
 
-        return {
-          name: repo.name,
-          metrics: result.metrics
-        };
-      })
-    
+      return {
+        name: repo.name,
+        metrics: result.metrics,
+      };
+    });
+
     return rulesResult;
   }
 

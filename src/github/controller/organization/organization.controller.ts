@@ -3,7 +3,6 @@ import { OrganizationService } from 'src/github/service/organization/organizatio
 
 @Controller('organizations')
 export class OrganizationController {
-
   constructor(private readonly organizationService: OrganizationService) {}
 
   @Post('/scanner')
