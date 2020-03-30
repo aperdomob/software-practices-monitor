@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { OrganizationGithub, RepositoryGithub } from '../interfaces/github.interfaces';
 import { TeamApi } from '../../github-api/interfaces/github-api.interfaces';
-import { CollaboratorGraphql, BranchGraphql, BranchProtectionRuleGraphql } from '../../github-graphql/interfaces/graphql.interfaces';
-import { Organization, Repository, Collaborator } from '../../../interfaces/domain.interfaces';
+import { CollaboratorGraphql, BranchGraphql, BranchProtectionRuleGraphql, VulnerabilityAlertGraphQL } from '../../github-graphql/interfaces/graphql.interfaces';
+import { Organization, Repository, Collaborator, VulnerabilityAlert } from '../../../interfaces/domain.interfaces';
 
 @Injectable()
 export class OrganizationMapper {
@@ -18,6 +18,7 @@ export class OrganizationMapper {
       name: node.name,
       lastUpdated: node.pushedAt,
       isPrivate: node.isPrivate,
+      vulnerabilities: node.vulnerabilityAlerts.nodes.map((vulnerability) => this.vulnerabilityTransform(vulnerability)),
       settings: {
         general: {
           isTemplate: node.isTemplate,
@@ -99,6 +100,15 @@ export class OrganizationMapper {
       allowForcePushes: !node.restrictsPushes,
       allowDeletions: 'PENDING!!!',
       requiredApprovingReviewCount: node.requiredApprovingReviewCount,
+    };
+  }
+
+  private vulnerabilityTransform(node: VulnerabilityAlertGraphQL): VulnerabilityAlert {
+    return {
+      name: node.securityVulnerability.package.name,
+      ecosystem: node.securityVulnerability.package.ecosystem,
+      severity: node.securityVulnerability.severity,
+      file: node.vulnerableManifestPath
     };
   }
 }

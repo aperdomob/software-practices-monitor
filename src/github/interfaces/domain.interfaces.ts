@@ -64,6 +64,13 @@ export interface File {
   content?: string;
 }
 
+export interface VulnerabilityAlert {
+  name: string;
+  ecosystem: string;
+  severity: string;
+  file: string;
+}
+
 export interface Repository {
   name: string;
   description?: string;
@@ -71,6 +78,7 @@ export interface Repository {
   isPrivate: boolean;
   settings: Setting;
   branches: Branch[];
+  vulnerabilities: VulnerabilityAlert[]
   files: {
     develop: File[];
     master: File[];

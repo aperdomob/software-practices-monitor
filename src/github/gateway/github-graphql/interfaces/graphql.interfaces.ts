@@ -42,6 +42,18 @@ export interface BranchGraphql {
   }
 }
 
+export interface VulnerabilityAlertGraphQL {
+  securityVulnerability: {
+    package: {
+      name: string;
+      ecosystem: string;
+    },
+    severity: string;
+  };
+  vulnerableManifestPath: string;
+  vulnerableRequirements: string;
+}
+
 export interface RepositoryGraphQL {
   name: string;
   description?: string;
@@ -56,6 +68,9 @@ export interface RepositoryGraphQL {
   rebaseMergeAllowed: boolean;
   squashMergeAllowed: boolean;
   viewerPermission: string;
+  vulnerabilityAlerts: {
+    nodes: VulnerabilityAlertGraphQL[]
+  }
   fundingLinks: any[];
   licenseInfo?: {
     name: string;

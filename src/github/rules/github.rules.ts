@@ -144,4 +144,9 @@ export const GithubRules: Rule<Repository>[] = [
   hasProtectionRule({ pattern: 'release/*' }),
   hasProtectionRule({ pattern: 'hotfix/*' }),
   protectionAllBranch(),
+  {
+    name: 'vulenerabilities',
+    expression: (repository) => assert.isAtMost(repository.vulnerabilities.length, 0, 'the repository has vulnerabilities'),
+    level: Level.CRITICAL
+  }
 ];

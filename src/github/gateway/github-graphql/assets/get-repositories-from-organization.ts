@@ -18,6 +18,19 @@ query($organizationName: String!, $numberOfRepositories: Int!) {
         rebaseMergeAllowed
         squashMergeAllowed
         viewerPermission
+        vulnerabilityAlerts(first: 100) {
+          nodes {
+            securityVulnerability {
+              package {
+                name
+                ecosystem
+              }
+              severity
+            }
+            vulnerableManifestPath
+            vulnerableRequirements
+          }  
+        }
         fundingLinks {
           url
         }
