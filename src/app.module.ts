@@ -15,7 +15,7 @@ import configuration from './configuration/configuration';
       isGlobal: true,
     }),
     GithubModule,
-    MongooseModule.forRoot(process.env.DATABASE_HOST, {
+    MongooseModule.forRoot(`mongodb://${process.env.DATABASE_HOST}`, {
       dbName: 'monitor',
       autoCreate: true,
       useNewUrlParser: true,
@@ -28,4 +28,5 @@ import configuration from './configuration/configuration';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {}

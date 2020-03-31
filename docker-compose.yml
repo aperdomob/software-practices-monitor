@@ -1,0 +1,41 @@
+version: '3.1'
+
+services:
+
+  software-practices-monitor:
+    build: .
+    # image: software-practices-monitor
+    restart: always
+    ports:
+      - 3000:3000
+    links:
+      - mongo
+    environment:
+      DATABASE_USER: root
+      DATABASE_PASSWORD: example
+      DATABASE_HOST: mongo
+      DATABASE_PORT: 27017
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      GITHUB_ORGANIZATION_NAME: ${GITHUB_ORGANIZATION_NAME}
+
+  mongo:
+    image: mongo
+    container_name: mongo-software-practice-monitor
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
+    volumes:
+      - /Users/aperdomob/Documents/temp/software-practice-monitor-mongo:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+
