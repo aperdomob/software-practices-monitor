@@ -13,7 +13,7 @@ export class EngineService {
     const resultRules = rules.map(rule => this.applyRule<T>(rule, value));
 
     const total = resultRules.length;
-    const failRules = resultRules.filter(current => current.result === 'fail');
+    const failRules = resultRules.filter(current => current.result === 'Fail');
     const fail = failRules.length;
     const ok = total - fail;
 
@@ -37,7 +37,7 @@ export class EngineService {
     };
 
     if (typeof result.error === 'object') {
-      result.result = 'fail';
+      result.result = 'Fail';
     }
 
     return result;

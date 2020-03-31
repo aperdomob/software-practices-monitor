@@ -252,7 +252,7 @@ export const GithubRules: Rule<Repository>[] = [
     name: 'automatically-delete-branch',
     expression: repository =>
       assert.isTrue(
-        repository.settings.general.mergeButton.allowRebaseMerging,
+        repository.settings.general.automaticallyDeleteHeadBranches,
         'the branchs are not remove automatically',
       ),
     level: Level.WARNING,

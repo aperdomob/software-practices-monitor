@@ -6,13 +6,14 @@ import { RepositoryRepository } from 'src/github/repositories/repository/reposit
 export class OrganizationService {
   constructor(
     private readonly githubGateway: GithubGateway,
-    private readonly repositoryRepository: RepositoryRepository) {}
+    private readonly repositoryRepository: RepositoryRepository,
+  ) {}
 
   public async scanner() {
     const organization = await this.githubGateway.scanOrganization();
 
-    this.repositoryRepository.deleteAll();
-    this.repositoryRepository.saveAll(organization.repositories);
+    await this.repositoryRepository.deleteAll();
+    await this.repositoryRepository.saveAll(organization.repositories);
 
     return organization;
   }

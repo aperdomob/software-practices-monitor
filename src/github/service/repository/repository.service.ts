@@ -28,7 +28,14 @@ export class RepositoryService {
     return rulesResult;
   }
 
-  getRepositoryConfidence(repository: string): any {
-    return this.repositoryReporitory.get({ name: repository });
+  async getRepositoryConfidence(repository: string): Promise<any> {
+    const repo = await this.repositoryReporitory.get({ name: repository });
+    const result = this.engineService.run<Repository>(GithubRules, repo);
+
+    return {
+      name: repo.name,
+      metrics: result.metrics,
+      rules: result.rules,
+    };
   }
 }
