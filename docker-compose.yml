@@ -28,7 +28,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - /Users/aperdomob/Documents/temp/software-practice-monitor-mongo:/data/db
+      - ~/temp/software-practice-monitor-mongo:/data/db
 
   mongo-express:
     image: mongo-express
