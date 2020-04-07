@@ -3,7 +3,6 @@ import { GithubApiGateway } from '../github-api/github-api.gateway';
 import { GithubGraphqlService } from '../github-graphql/github-graphql.gateway';
 import { ConfigService } from '@nestjs/config';
 import { OrganizationMapper } from './mapper/organization.mapper';
-import { Organization } from '../../interfaces/domain.interfaces';
 
 @Injectable()
 export class GithubGateway {

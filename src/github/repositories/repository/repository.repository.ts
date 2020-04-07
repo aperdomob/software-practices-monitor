@@ -11,8 +11,8 @@ export class RepositoryRepository {
     private repositoryModel: Model<RepositoryDocument>,
   ) {}
 
-  public deleteAll() {
-    this.repositoryModel.deleteMany({}).exec();
+  public async deleteAll() {
+    await this.repositoryModel.deleteMany({}).exec();
   }
 
   async saveAll(repositoriesDto: RepositoryDto[]): Promise<RepositoryDto[]> {

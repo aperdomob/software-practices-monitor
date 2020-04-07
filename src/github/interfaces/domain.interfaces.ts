@@ -72,6 +72,8 @@ export interface VulnerabilityAlert {
 
 export interface Repository {
   name: string;
+  fullName: string;
+  link: string;
   description?: string;
   lastUpdated: string;
   isPrivate: boolean;

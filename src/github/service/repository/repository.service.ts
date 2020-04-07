@@ -21,6 +21,8 @@ export class RepositoryService {
 
       return {
         name: repo.name,
+        fullName: repo.fullName,
+        link: repo.link,
         metrics: result.metrics,
       };
     });
@@ -34,6 +36,8 @@ export class RepositoryService {
 
     return {
       name: repo.name,
+      fullName: repo.fullName,
+      link: repo.link,
       metrics: result.metrics,
       rules: result.rules,
     };

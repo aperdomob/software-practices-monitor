@@ -33,6 +33,8 @@ export class OrganizationMapper {
       name: node.name,
       lastUpdated: node.pushedAt,
       isPrivate: node.isPrivate,
+      fullName: node.additionalData.full_name,
+      link: node.additionalData.html_url,
       vulnerabilities: node.vulnerabilityAlerts.nodes.map(vulnerability =>
         this.vulnerabilityTransform(vulnerability),
       ),

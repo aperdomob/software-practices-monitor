@@ -27,23 +27,63 @@ export class EngineService {
     };
   }
 
-  private applyRule<T>(rule, value: T): RuleResponse {
+  private applyRule<T>(rule: Rule<T>, value: T): RuleResponse {
     console.log(`Executiong rule ${rule.name}`);
 
     const result: RuleResponse = {
       name: rule.name,
       result: 'OK',
       error: this.runExpression(rule, value),
+      children: []
     };
 
     if (typeof result.error === 'object') {
       result.result = 'Fail';
     }
 
+    if (typeof rule.children !== 'undefined') {
+      if (result.result === 'Fail') {
+        result.children = this.failResponses(rule.children);
+      } else {
+        const childrenExecution = rule.children.map((r) => this.applyRule(r, value));
+        const some = childrenExecution.filter((r) => typeof r.error !== 'undefined');
+
+        if (some.length > 0) {
+          result.result = 'Fail';
+
+          result.error = {
+            message: 'one or more children rule fail',
+            level: rule.level,
+            actual: some.length,
+            expected: 0,
+            stack: JSON.stringify(some, null, 2),
+          };
+        }
+
+        result.children = childrenExecution;
+      }
+    }
+
     return result;
   }
 
-  private runExpression<T>(rule, value: T): ErrorResponse {
+  private failResponses(children: Rule<any>[]): RuleResponse[] {
+    return children.map((r) => ({
+      name: r.name,
+      displayName: r.displayName,
+      result: 'Fail',
+      error: {
+        message: 'non executed',
+        level: r.level,
+        actual: undefined,
+        expected: undefined,
+        stack: '',
+      },
+      children: typeof r.children === 'undefined' ? [] : this.failResponses(r.children)
+    }));
+  }
+
+  private runExpression<T>(rule: Rule<T>, value: T): ErrorResponse {
     try {
       rule.expression(value);
     } catch (ex) {

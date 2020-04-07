@@ -27,6 +27,7 @@ export interface RuleResponse {
   displayName?: string;
   result: string;
   error?: ErrorResponse;
+  children: RuleResponse[]
 }
 
 export interface RuleEngineResponse {
