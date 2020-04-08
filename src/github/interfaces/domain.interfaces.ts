@@ -15,8 +15,8 @@ export interface BranchProtectionRules {
   statusChecks: string[];
   requireSignedCommits: boolean;
   includeAdministrators: boolean;
-  restricWhoCanPushToMatchingBranches: string;
-  allowForcePushes: boolean;
+  restricWhoCanPushToMatchingBranches: boolean;
+  allowForcePushes: string;
   allowDeletions: string;
   requiredApprovingReviewCount: number;
 }

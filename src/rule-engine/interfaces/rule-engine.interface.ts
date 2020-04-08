@@ -5,13 +5,18 @@ export enum Level {
   CRITICAL = 'critical',
 }
 
+export interface Children<T> {
+  item: (value: T) => any;
+  rules: Rule<any>[]
+}
+
 export interface Rule<T> {
   name: string;
   displayName?: string;
   level: Level;
-  expression: (value: T) => void;
+  expression: (value: T) => any;
   errorMessagePattern?: string;
-  children?: Rule<any>[];
+  children?: Rule<any>[]
 }
 
 export interface ErrorResponse {

@@ -129,8 +129,8 @@ export class OrganizationMapper {
       statusChecks: node.requiredStatusCheckContexts,
       requireSignedCommits: node.requiresCommitSignatures,
       includeAdministrators: node.isAdminEnforced,
-      restricWhoCanPushToMatchingBranches: 'PENDING!!!',
-      allowForcePushes: !node.restrictsPushes,
+      restricWhoCanPushToMatchingBranches: node.restrictsPushes,
+      allowForcePushes: 'PENDING!!!',
       allowDeletions: 'PENDING!!!',
       requiredApprovingReviewCount: node.requiredApprovingReviewCount,
     };

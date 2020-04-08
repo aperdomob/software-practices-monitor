@@ -27,7 +27,7 @@ export class RepositoryService {
       };
     });
 
-    return rulesResult;
+    return rulesResult.sort((a, b) => b .metrics.fail - a.metrics.fail);
   }
 
   async getRepositoryConfidence(repository: string): Promise<any> {

@@ -1,4 +1,4 @@
-import { Rule, Level } from 'src/rule-engine/interfaces/rule-engine.interface';
+import { Rule, Level, Children } from 'src/rule-engine/interfaces/rule-engine.interface';
 import { assert } from 'chai';
 import {
   Repository,
@@ -14,6 +14,8 @@ const hasTeamRule = (teamName: string, permission: string, level: Level) => ({
     );
 
     assert.exists(team, `the team "${teamName}" is not configured`);
+
+    return team;
   },
   level: level,
   children: [
@@ -42,12 +44,15 @@ const hasProtectionRule = ({
   const children: Rule<BranchProtectionRules>[] = [
     {
       name: 'require-approving-reviews',
-      expression: rule =>
+      expression: rule => {
         assert.equal(
           rule.requireApprovingReviews,
           requireApprove,
           `approving PR is ${requireApprove ? 'disabled' : 'enabled'}`,
-        ),
+        );
+
+        return rule;
+      },
       level: Level.ERROR,
       children: requireApprove
         ? [
@@ -88,12 +93,15 @@ const hasProtectionRule = ({
     },
     {
       name: 'require-status-checks',
-      expression: rule =>
+      expression: rule => {
         assert.equal(
           rule.requireStatusChecksToPassBeforeMerging,
           statusCheck,
           `require status check is ${statusCheck ? 'disabled' : 'enabled'}`,
-        ),
+        );
+
+        return rule
+      },
       level: Level.CRITICAL,
       children: statusCheck
         ? [
@@ -134,13 +142,8 @@ const hasProtectionRule = ({
       level: Level.CRITICAL,
     },
     {
-      name: 'force-push',
-      expression: rule =>
-        assert.equal(
-          rule.allowForcePushes,
-          allowForce,
-          `Allow force push is ${allowForce ? 'disabled' : 'enabled'}`,
-        ),
+      name: 'restrict-push',
+      expression: rule => assert.isFalse(rule.restricWhoCanPushToMatchingBranches, 'restrict pushes is enabled'),
       level: Level.ERROR,
     },
     {
@@ -161,7 +164,9 @@ const hasProtectionRule = ({
         current => current.pattern === pattern,
       );
 
-      assert.isNotNull(rule, `the ${pattern} rule is not configured`);
+      assert.isOk(rule, `the ${pattern} rule is not configured`);
+
+      return rule;
     },
     level: Level.ERROR,
     children,
@@ -208,7 +213,7 @@ export const GithubRules: Rule<Repository>[] = [
     expression: repository =>
       assert.isTrue(
         repository.settings.general.dataServices.dependecyGraph,
-        'the repository does not have configured dependency graph',
+        'the repository does not have a dependecy graph',
       ),
     level: Level.ERROR,
   },

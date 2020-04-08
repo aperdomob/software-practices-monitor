@@ -2,10 +2,8 @@ import { Injectable } from '@nestjs/common';
 import {
   Rule,
   RuleResponse,
-  ErrorResponse,
   RuleEngineResponse,
 } from 'src/rule-engine/interfaces/rule-engine.interface';
-import { AssertionError } from 'chai';
 
 @Injectable()
 export class EngineService {
@@ -33,19 +31,15 @@ export class EngineService {
     const result: RuleResponse = {
       name: rule.name,
       result: 'OK',
-      error: this.runExpression(rule, value),
+      error: undefined,
       children: []
     };
 
-    if (typeof result.error === 'object') {
-      result.result = 'Fail';
-    }
+    try {
+      const expression = rule.expression(value);
 
-    if (typeof rule.children !== 'undefined') {
-      if (result.result === 'Fail') {
-        result.children = this.failResponses(rule.children);
-      } else {
-        const childrenExecution = rule.children.map((r) => this.applyRule(r, value));
+      if (typeof rule.children !== 'undefined') {
+        const childrenExecution = rule.children.map((r) => this.applyRule(r, expression));
         const some = childrenExecution.filter((r) => typeof r.error !== 'undefined');
 
         if (some.length > 0) {
@@ -61,6 +55,25 @@ export class EngineService {
         }
 
         result.children = childrenExecution;
+      }
+    } catch(ex) {
+      if (ex.name === 'AssertionError') {
+        const error = {
+          message: ex.message,
+          stack: ex.stack,
+          actual: ex.actual,
+          expected: ex.expected,
+          level: rule.level,
+        };
+
+        result.error = error;
+        result.result = 'Fail';
+
+        if (typeof rule.children !== 'undefined') {
+          result.children = this.failResponses(rule.children);
+        }
+      } else {
+        throw ex;
       }
     }
 
@@ -81,25 +94,5 @@ export class EngineService {
       },
       children: typeof r.children === 'undefined' ? [] : this.failResponses(r.children)
     }));
-  }
-
-  private runExpression<T>(rule: Rule<T>, value: T): ErrorResponse {
-    try {
-      rule.expression(value);
-    } catch (ex) {
-      if (ex.name === 'AssertionError') {
-        return {
-          message: ex.message,
-          stack: ex.stack,
-          actual: ex.actual,
-          expected: ex.expected,
-          level: rule.level,
-        };
-      }
-
-      throw ex;
-    }
-
-    return undefined;
   }
 }
