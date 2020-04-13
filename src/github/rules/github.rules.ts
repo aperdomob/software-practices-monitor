@@ -186,6 +186,7 @@ const protectionAllBranch = () =>
 export const GithubRules: Rule<Repository>[] = [
   {
     name: 'repo-description',
+    displayName: 'Repository Description',
     expression: repository =>
       assert.isNotNull(
         repository.description,
@@ -284,7 +285,7 @@ export const GithubRules: Rule<Repository>[] = [
   hasProtectionRule({ pattern: 'hotfix/*' }),
   protectionAllBranch(),
   {
-    name: 'vulenerabilities',
+    name: 'vulnerabilities',
     expression: repository =>
       assert.isAtMost(
         repository.vulnerabilities.length,

@@ -30,6 +30,7 @@ export class EngineService {
 
     const result: RuleResponse = {
       name: rule.name,
+      displayName: rule.displayName,
       result: 'OK',
       error: undefined,
       children: []
